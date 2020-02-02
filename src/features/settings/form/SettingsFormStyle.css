@@ -1,0 +1,20 @@
+.settings-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-form-card {
+    position: absolute;
+    top: 200px;
+    max-width: 600px;
+    width: 600px;
+}
+
+.settings-form-btn-container {
+    margin: 50px auto auto auto;
+    width: 390px;
+    display: flex;
+    justify-content: space-between;
+}

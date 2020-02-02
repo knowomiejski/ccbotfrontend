@@ -1,0 +1,77 @@
+.login-page-container {
+    margin: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-page-card {
+    max-width: 700px;
+    width: 700px;
+    max-height: 400px;
+    height: 400px;
+}
+
+.login-page-input-container {
+    margin: auto;
+    width: 390px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-page-btn-container {
+    margin: 0 auto;
+}
+
+.login-page-main-title-container {
+    margin-left: -30px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.login-page-logo {
+    min-height: 265px;
+    min-width: 155px;
+    background-image: url('../../app/layout/assets/Logo-ConservationCast-Master.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.login-page-title-text-container {
+    margin-left: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-transform: uppercase;
+
+}
+
+.login-page-subtitle {
+    text-align: left;
+    font-size: 58px;
+    line-height: 58px;
+    font-weight: 300;
+    letter-spacing: 0;
+    color: #404040;
+}
+
+.login-page-title {
+    text-align: left;
+    font-size: 72px;
+    line-height: 72px;
+    font-weight: 700;
+    letter-spacing: 0;
+    color: #404040;
+}
+
+.login-page-title-desc {
+    text-align: right;
+    font-size: 33px;
+    line-height: 33px;
+    font-weight: 300;
+    letter-spacing: 0;
+    color: #404040;
+}
