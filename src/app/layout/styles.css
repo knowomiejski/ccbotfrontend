@@ -89,6 +89,11 @@ code {
 }
 
 .cc-btn {
+    box-sizing: border-box;
+    min-height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 1px solid #cccccc;
     user-select: none;
     cursor: pointer;
@@ -111,7 +116,7 @@ code {
     align-items: center;
     font-size: 24px;
     min-width: 30px;
-    min-height:30px;
+    min-height: 30px;
     border-radius: 50%;
     padding: 5px;
 }
@@ -203,7 +208,6 @@ code {
     font-weight: 300;
     display: flex;
     justify-content: center;
-    padding: 3px 0;
 }
 
 .cc-list-item-container {
@@ -253,4 +257,40 @@ code {
     width: 100vw;
     height: 100vh;
     background: #40404090;
+}
+
+.cc-smol-loader {
+    border: 2px solid #f3f3f3;
+    border-top: 4px solid #7D7DE5;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: cc-spin .8s linear infinite;
+}
+
+.cc-medium-loader {
+    border: 4px solid #f3f3f3;
+    border-top: 6px solid #7D7DE5;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: cc-spin .8s linear infinite;
+}
+
+.cc-large-loader {
+    border: 4px solid #f3f3f3;
+    border-top: 6px solid #7D7DE5;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: cc-spin .8s linear infinite;
+}
+
+@keyframes cc-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
