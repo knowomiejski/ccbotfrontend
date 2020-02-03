@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import '../SettingsPageStyle.css'
 import './SettingsFormStyle.css'
 import {ISettings} from '../../../app/models/Settings';
@@ -10,8 +10,33 @@ interface IProps {
 }
 
 
-const SettingsForm: React.FC<IProps> = ({toggleShowForm, type, settings}) => {
+const SettingsForm: React.FC<IProps> = ({toggleShowForm, type, settings: selectedSettings}) => {
 
+    const initializeForm = () => {
+        if(selectedSettings) {
+            return selectedSettings
+        } else {
+            return {
+                id: '',
+                name: '',
+                prefix: '',
+                reminderTimer: 0,
+                folderId: ''
+            }
+        }
+    };
+
+    const [newSettings, setNewSettings] = useState<ISettings>(initializeForm);
+
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const { name, value} = event.target;
+        setNewSettings({...newSettings, [name]: value})
+    };
+
+    const handleSubmit = () => {
+        toggleShowForm();
+        console.log(newSettings)
+    };
 
     return (
         <div className="cc-modal">
@@ -26,20 +51,20 @@ const SettingsForm: React.FC<IProps> = ({toggleShowForm, type, settings}) => {
 
                                 <div className="cc-input-container">
                                     <label className="cc-label">Name</label>
-                                    <input defaultValue={settings?.name} className="cc-input" inputMode="text"/>
+                                    <input name="name" onChange={handleInputChange} defaultValue={newSettings.name} className="cc-input" inputMode="text"/>
                                 </div>
                                 <div className="cc-input-container">
                                     <label className="cc-label">Prefix</label>
-                                    <input defaultValue={settings?.prefix} className="cc-input" inputMode="text"/>
+                                    <input name="prefix" onChange={handleInputChange} defaultValue={newSettings.prefix} className="cc-input" inputMode="text"/>
                                 </div>
                                 <div className="cc-input-container">
                                     <label className="cc-label">Reminder timer (in seconds)</label>
-                                    <input defaultValue={settings?.reminderTimer} className="cc-input" type="number"
+                                    <input name="reminderTimer" onChange={handleInputChange} defaultValue={newSettings.reminderTimer} className="cc-input" type="number"
                                            inputMode="numeric"/>
                                 </div>
                                 <div className="cc-input-container">
                                     <label className="cc-label">Google Docs Folder ID</label>
-                                    <input defaultValue={settings?.folderId} className="cc-input" inputMode="text"/>
+                                    <input name="folderID" onChange={handleInputChange} defaultValue={newSettings.folderId} className="cc-input" inputMode="text"/>
                                 </div>
 
                                 <div className="settings-form-btn-container">
@@ -49,7 +74,7 @@ const SettingsForm: React.FC<IProps> = ({toggleShowForm, type, settings}) => {
                                     <div onClick={toggleShowForm} className="cc-btn">
                                         <div className="cc-btn-content">Back</div>
                                     </div>
-                                    <div onClick={toggleShowForm} className="cc-btn cc-sucess-btn">
+                                    <div onClick={()=>{handleSubmit();}} className="cc-btn cc-sucess-btn">
                                         <div className="cc-btn-content">Save</div>
                                     </div>
                                 </div>
