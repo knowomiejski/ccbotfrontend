@@ -1,38 +1,28 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect} from "react";
 import {FiEdit} from "react-icons/fi";
 import "./SettingsPageStyle.css"
-import {ISettings} from "../../app/models/Settings";
-import axios from "axios";
 import SettingsForm from "./form/SettingsForm";
+import Loader from "../../app/layout/Loader";
+import SettingsStore from "../../app/stores/settings/settingsStore";
+import {observer} from "mobx-react-lite";
 
 const SettingsPage = () => {
-    const [settingsList, setSettingsList] = useState<ISettings[]>([]);
-    const [selectedSettings, setSelectedSettings] = useState<ISettings>();
-    const [showForm, setShowForm] = useState<boolean>(false);
-    const [formType, setFormType] = useState<string>('');
+    const settingsStore = useContext(SettingsStore);
 
     useEffect(() => {
-        axios.get<ISettings[]>('http://localhost:5000/api/settings')
-            .then((response) => {
-                console.log(response);
-                setSettingsList(response.data);
-                setSelectedSettings(response.data[0]);
-            });
+        getSettingsList();
     }, []);
 
-    const toggleShowForm = () => {
-        setShowForm(!showForm)
+    const getSettingsList = () => {
+        settingsStore.loadSettings();
     };
 
     return (
         <div className="cc-container">
             <div>
                 {
-                    showForm ?
-                        (formType === "Add New") ?
-                            <SettingsForm toggleShowForm={toggleShowForm} type={formType}/>
-                            : <SettingsForm toggleShowForm={toggleShowForm} type={formType}
-                                            settings={selectedSettings}/>
+                    settingsStore.showForm ?
+                        <SettingsForm/>
                         : null
                 }
             </div>
@@ -44,53 +34,59 @@ const SettingsPage = () => {
                             <div className="cc-card-title">
                                 Choose Settings
                             </div>
-                            <div className="settings-page-list">
-                                {settingsList.map((settings) => (
-                                    <label
-                                        key={settings.id}
-                                        className={"cc-list-item-container " +
-                                        (selectedSettings?.id === settings.id ? "cc-list-item-container-selected" : "cc-list-item-container-unselected")}>
-                                        <input onClick={() => {
-                                            setSelectedSettings(settings);
-                                            console.log(selectedSettings);
-                                        }} name="setting" type="radio"/>
-                                        <div className="settings-page-list-item-content">
-                                            <div className="settings-page-list-item-title">
-                                                <div>{settings.name}</div>
-                                            </div>
-                                            <div className="settings-page-list-item-edit">
-                                                <div
-                                                    onClick={() => {
-                                                        setShowForm(true);
-                                                        setFormType("Edit");
-                                                    }}
-                                                    className={"cc-btn cc-fab-btn cc-warning-btn " +
-                                                    (selectedSettings?.id === settings.id ? "" : "settings-page-fab-unselected")}>
-                                                    <div className="cc-btn-content">
-                                                        <FiEdit/>
+                            {settingsStore.loadingSettingsList ?
+                                <div className="settings-page-list-loading settings-page-loader">
+                                    <Loader size="medium"/>
+                                </div> :
+                                <div>
+                                    <div className="settings-page-list">
+                                        {settingsStore.settingsList.map((settings) => (
+                                            <label
+                                                key={settings.id}
+                                                className={"cc-list-item-container " +
+                                                (settingsStore.selectedSettings?.id === settings.id ? "cc-list-item-container-selected" : "cc-list-item-container-unselected")}>
+                                                <input onClick={() => {
+                                                    settingsStore.setSelectedSettings(settings);
+                                                    console.log(settingsStore.selectedSettings);
+                                                }} name="setting" type="radio"/>
+                                                <div className="settings-page-list-item-content">
+                                                    <div className="settings-page-list-item-title">
+                                                        <div>{settings.name}</div>
+                                                    </div>
+                                                    <div className="settings-page-list-item-edit">
+                                                        <div
+                                                            onClick={() => {
+                                                                settingsStore.setFormType("Edit");
+                                                                settingsStore.toggleShowForm();
+                                                            }}
+                                                            className={"cc-btn cc-fab-btn cc-warning-btn " +
+                                                            (settingsStore.selectedSettings?.id === settings.id ? "" : "settings-page-fab-unselected")}>
+                                                            <div className="cc-btn-content">
+                                                                <FiEdit/>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                            </label>
+                                        ))}
+                                    </div>
+                                    <div className="settings-page-btn-container">
+                                        <div onClick={() => {
+                                            settingsStore.setFormType("Add New");
+                                            settingsStore.toggleShowForm();
+                                        }} className="cc-btn cc-sucess-btn">
+                                            <div className="cc-btn-content">Add New Settings</div>
+                                        </div>
+                                        <div className="settings-page-control-btn-container">
+                                            <div className="cc-btn">
+                                                <div className="cc-btn-content">Back</div>
+                                            </div>
+                                            <div className="cc-btn cc-primary-btn">
+                                                <div className="cc-btn-content">Next</div>
                                             </div>
                                         </div>
-                                    </label>
-                                ))}
-                            </div>
-                            <div className="settings-page-btn-container">
-                                <div onClick={() => {
-                                    setShowForm(true);
-                                    setFormType("Add New");
-                                }} className="cc-btn cc-sucess-btn">
-                                    <div className="cc-btn-content">Add New Settings</div>
-                                </div>
-                                <div className="settings-page-control-btn-container">
-                                    <div className="cc-btn">
-                                        <div className="cc-btn-content">Back</div>
                                     </div>
-                                    <div className="cc-btn cc-primary-btn">
-                                        <div className="cc-btn-content">Next</div>
-                                    </div>
-                                </div>
-                            </div>
+                                </div>}
                         </div>
                     </div>
                 </div>
@@ -99,4 +95,4 @@ const SettingsPage = () => {
     );
 };
 
-export default SettingsPage;
+export default observer(SettingsPage);
