@@ -1,5 +1,5 @@
 export interface ISettings {
-    id: string;
+    id?: string;
     name: string;
     prefix: string;
     reminderTimer: number;

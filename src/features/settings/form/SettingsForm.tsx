@@ -68,7 +68,7 @@ const SettingsForm = () => {
                                 </div>
                                 <div className="cc-input-container">
                                     <label className="cc-label">Google Docs Folder ID</label>
-                                    <input name="folderID" onChange={handleInputChange}
+                                    <input name="folderId" onChange={handleInputChange}
                                            defaultValue={newSettings.folderId} className="cc-input" inputMode="text"/>
                                 </div>
                                 {

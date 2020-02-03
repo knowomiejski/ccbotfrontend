@@ -22,6 +22,7 @@ class SettingsStore {
             const settingsList = await agent.Settings.list();
             runInAction('loading settings list',() => {
                 settingsList.forEach(settings => {
+                    console.log(settings);
                     this.settingsRegistry.set(settings.id, settings)
                 });
                 this.settingsList = Array.from(this.settingsRegistry.values());
@@ -45,7 +46,6 @@ class SettingsStore {
         if (this.formType === 'Add New' && !this.showForm) {
             this.setSelectedSettings(
                 {
-                    id: '',
                     name: '',
                     prefix: '',
                     reminderTimer: 0,
@@ -66,20 +66,24 @@ class SettingsStore {
     async submitSettings(newSettings: ISettings) {
         this.loadingSettingsForm = true;
         if (this.formType === 'Add New') {
+            console.log('in Add New');
             try {
                 const created = await agent.Settings.create(newSettings);
                 runInAction('creating setting',() => {
+                    console.log('In created: ', created);
                     this.toggleShowForm();
                     this.loadSettings();
                 });
             } catch (e) {
                 console.log(e);
                 runInAction('error creating setting',() => {
+                    console.log(newSettings);
                     this.toggleShowForm();
                     this.loadSettings();
                 })
             }
         } else {
+            console.log('in Edit');
             try {
                 const updated = await agent.Settings.update(newSettings);
                 runInAction('updating setting',() => {
@@ -99,7 +103,7 @@ class SettingsStore {
     @action
     async deleteSettings() {
         try {
-            const created = await agent.Settings.delete(this.selectedSettings!.id);
+            const created = await agent.Settings.delete(this.selectedSettings!.id!);
             runInAction('deleting settings',() => {
                 this.toggleShowForm();
                 this.loadSettings();

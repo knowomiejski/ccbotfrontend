@@ -9,8 +9,10 @@ const sleepTime = 200;
 
 const sleep = (ms: number) =>
     (response: AxiosResponse) =>
-        new Promise<AxiosResponse>(resolve =>
-            setTimeout(() => resolve(response), ms));
+        new Promise<AxiosResponse>(resolve => {
+                setTimeout(() => resolve(response), ms)
+            }
+        );
 
 const requests = {
     get: (url: string) => axios.get(url).then(sleep(sleepTime)).then(responseBody),
