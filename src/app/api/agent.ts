@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from 'axios'
 import {ISettings} from "../models/Settings";
+import {IBot} from "../models/Bot";
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
@@ -29,6 +30,15 @@ const Settings = {
     delete: (id: string) => requests.del(`/settings/${id}`)
 };
 
+const Bot = {
+    list: (): Promise<IBot[]> => requests.get('/bot'),
+    details: (id: string) => requests.get(`/bot/${id}`),
+    create: (bot: IBot) => requests.post('/bot', bot),
+    update: (bot: IBot) => requests.put(`/bot/${bot.id}`, bot),
+    delete: (id: string) => requests.del(`/bot/${id}`)
+};
+
 export default {
-    Settings
+    Settings,
+    Bot
 }

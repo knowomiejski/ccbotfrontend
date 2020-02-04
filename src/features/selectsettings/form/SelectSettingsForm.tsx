@@ -1,12 +1,12 @@
 import React, {ChangeEvent, useContext, useState} from 'react';
-import '../SettingsPageStyle.css'
-import './SettingsFormStyle.css'
+import '../SelectSettingsPageStyle.css'
+import './SelectSettingsFormStyle.css'
 import {ISettings} from '../../../app/models/Settings';
 import SettingsStore from "../../../app/stores/settings/settingsStore";
 import Loader from "../../../app/layout/Loader";
 import {observer} from 'mobx-react-lite';
 
-const SettingsForm = () => {
+const SelectSettingsForm = () => {
 
     const settingsStore = useContext(SettingsStore);
 
@@ -42,8 +42,8 @@ const SettingsForm = () => {
     return (
         <div className="cc-modal">
             <div className="cc-container">
-                <div className="settings-form-container">
-                    <div className="cc-card settings-form-card">
+                <div className="select-settings-form-container">
+                    <div className="cc-card select-settings-form-card">
                         <div className="cc-card-content">
                             <div>
                                 <div className="cc-card-title">
@@ -73,26 +73,26 @@ const SettingsForm = () => {
                                 </div>
                                 {
                                     settingsStore.loadingSettingsForm ?
-                                        <div className="settings-form-btn-container">
+                                        <div className="select-settings-form-btn-container">
                                             <Loader size='smol'/>
                                         </div>
                                         :
-                                        <div className="settings-form-btn-container">
+                                        <div className="select-settings-form-btn-container">
                                             {settingsStore.formType === "Add New" ?
                                                 <div style={{display: "none"}}></div> :
                                                 <div onClick={() => {
                                                     settingsStore.deleteSettings();
-                                                }} className="cc-btn cc-danger-btn settings-form-btn">
+                                                }} className="cc-btn cc-danger-btn select-settings-form-btn">
                                                     <div className="cc-btn-content">Delete</div>
                                                 </div>}
                                             <div onClick={() => {
                                                 settingsStore.toggleShowForm()
-                                            }} className="cc-btn settings-form-btn">
+                                            }} className="cc-btn select-settings-form-btn">
                                                 <div className="cc-btn-content">Back</div>
                                             </div>
                                             <div onClick={() => {
                                                 settingsStore.submitSettings(newSettings);
-                                            }} className="cc-btn cc-sucess-btn settings-form-btn">
+                                            }} className="cc-btn cc-sucess-btn select-settings-form-btn">
                                                 <div className="cc-btn-content">Save</div>
                                             </div>
                                         </div>
@@ -106,4 +106,4 @@ const SettingsForm = () => {
     );
 };
 
-export default observer(SettingsForm);
+export default observer(SelectSettingsForm);

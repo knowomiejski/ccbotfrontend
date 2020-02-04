@@ -1,23 +1,23 @@
-.settings-form-container {
+.select-settings-form-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.settings-form-card {
+.select-settings-form-card {
     position: absolute;
     top: 200px;
     max-width: 600px;
     width: 600px;
 }
 
-.settings-form-btn-container {
+.select-settings-form-btn-container {
     margin: 50px auto auto auto;
     display: flex;
     justify-content: center;
 }
 
-.settings-form-btn {
+.select-settings-form-btn {
     margin: 0 5px;
 }

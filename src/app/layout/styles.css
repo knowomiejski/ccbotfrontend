@@ -89,6 +89,7 @@ code {
 }
 
 .cc-btn {
+    text-decoration: none;
     box-sizing: border-box;
     min-height: 35px;
     display: flex;
@@ -232,6 +233,10 @@ code {
 
 .cc-list-item-container:last-child {
     margin: 30px 0 0 0;
+}
+
+.cc-list-item-container:only-of-type {
+    margin: 0;
 }
 
 .cc-list-item-container input {

@@ -15,12 +15,12 @@ class SettingsStore {
     @observable loadingSettingsList: boolean = false;
     @observable loadingSettingsForm: boolean = false;
 
-    @action loadSettings = async () => {
+    @action loadSettingsList = async () => {
         this.loadingSettingsList = true;
         this.settingsRegistry.clear();
         try {
             const settingsList = await agent.Settings.list();
-            runInAction('loading settings list',() => {
+            runInAction('loading selectsettings list',() => {
                 settingsList.forEach(settings => {
                     console.log(settings);
                     this.settingsRegistry.set(settings.id, settings)
@@ -72,14 +72,16 @@ class SettingsStore {
                 runInAction('creating setting',() => {
                     console.log('In created: ', created);
                     this.toggleShowForm();
-                    this.loadSettings();
+                    this.loadSettingsList();
+                    this.loadingSettingsForm = false;
                 });
             } catch (e) {
                 console.log(e);
                 runInAction('error creating setting',() => {
                     console.log(newSettings);
                     this.toggleShowForm();
-                    this.loadSettings();
+                    this.loadSettingsList();
+                    this.loadingSettingsForm = false;
                 })
             }
         } else {
@@ -88,13 +90,15 @@ class SettingsStore {
                 const updated = await agent.Settings.update(newSettings);
                 runInAction('updating setting',() => {
                     this.toggleShowForm();
-                    this.loadSettings();
+                    this.loadSettingsList();
+                    this.loadingSettingsForm = false;
                 });
             } catch (e) {
                 console.log(e);
                 runInAction('error updating setting',() => {
                     this.toggleShowForm();
-                    this.loadSettings();
+                    this.loadSettingsList();
+                    this.loadingSettingsForm = false;
                 });
             }
         }
@@ -102,17 +106,20 @@ class SettingsStore {
 
     @action
     async deleteSettings() {
+        this.loadingSettingsForm = true;
         try {
             const created = await agent.Settings.delete(this.selectedSettings!.id!);
-            runInAction('deleting settings',() => {
+            runInAction('deleting selectsettings',() => {
                 this.toggleShowForm();
-                this.loadSettings();
+                this.loadSettingsList();
+                this.loadingSettingsForm = false;
             });
         } catch (e) {
             console.log(e);
             runInAction('error deleting setting',() => {
                 this.toggleShowForm();
-                this.loadSettings();
+                this.loadSettingsList();
+                this.loadingSettingsForm = false;
             });
         }
 

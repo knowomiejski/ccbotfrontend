@@ -1,4 +1,4 @@
-.settings-page-container {
+.select-settings-page-container {
     margin: 100px;
     display: flex;
     flex-direction: column;
@@ -6,24 +6,18 @@
     justify-content: center;
 }
 
-.settings-page-card {
+.select-settings-page-card {
     max-width: 700px;
     width: 700px;
 }
 
-.settings-page-list {
+.select-settings-page-list {
     padding: 30px;
     height: 400px;
     overflow: auto;
 }
 
-.settings-page-list-loading {
-    padding: 30px;
-    height: 500px;
-    overflow: auto;
-}
-
-.settings-page-list-item-content {
+.select-settings-page-list-item-content {
     display: grid;
     width: 100%;
     margin: 0 30px;
@@ -33,38 +27,41 @@
     grid-row-gap: 0px;
 }
 
-.settings-page-list-item-title {
+.select-settings-page-list-item-title {
     text-align: center;
     grid-area: 1 / 2 / 2 / 3;
 }
 
-.settings-page-list-item-edit {
+.select-settings-page-list-item-edit {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     grid-area: 1 / 3 / 2 / 4;
 }
 
-.settings-page-fab-unselected {
+.select-settings-page-fab-unselected {
     pointer-events: none;
     opacity: 0;
 }
 
-.settings-page-btn-container {
+.select-settings-page-btn-container {
     margin: 20px auto auto auto;
     width: 250px;
 }
 
-.settings-page-control-btn-container {
+.select-settings-page-control-btn-container {
     margin: 10px auto auto auto;
     display: flex;
     justify-content: space-between;
 }
 
-.settings-page-loader {
+.select-settings-page-loader {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 30px;
+    height: 500px;
+    overflow: auto;
 }
 
 .example-enter {

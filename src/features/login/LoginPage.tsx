@@ -1,6 +1,7 @@
 import React from "react";
 import "./LoginPageStyle.css"
 import "../../app/layout/styles.css"
+import {Link} from "react-router-dom";
 
 const LoginPage = () => {
     return (
@@ -38,11 +39,11 @@ const LoginPage = () => {
                             </div>
                         </div>
                         <div className="login-page-btn-container">
-                            <div className="cc-btn cc-primary-btn">
+                            <Link className="cc-btn cc-primary-btn" to='/bot'>
                                 <div className="cc-btn-content">
                                     Login
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </div>

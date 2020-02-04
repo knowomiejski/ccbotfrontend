@@ -1,13 +1,16 @@
 import React, {useContext, useState} from 'react';
 import './styles.css';
-import SettingsPage from "../../features/settings/SettingsPage";
-import SettingsStore from "../stores/settings/settingsStore";
+import SelectSettingsPage from "../../features/selectsettings/SelectSettingsPage";
+import {Route} from 'react-router-dom';
+import LoginPage from "../../features/login/LoginPage";
+import SelectBotPage from "../../features/selectbot/SelectBotPage";
 
 const App = () => {
-    const settingsStore = useContext(SettingsStore);
     return (
         <div className="App">
-            <SettingsPage/>
+            <Route exact path='/' component={LoginPage}/>
+            <Route path='/bot' component={SelectBotPage}/>
+            <Route path='/settings' component={SelectSettingsPage}/>
         </div>
     );
 };
