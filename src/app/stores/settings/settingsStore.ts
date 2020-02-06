@@ -1,11 +1,15 @@
-import {action, configure, observable, runInAction} from 'mobx';
-import {createContext} from "react";
+import {action, observable, runInAction} from 'mobx';
 import {ISettings} from "../../models/Settings";
 import agent from "../../api/agent";
+import {RootStore} from "../rootStore";
 
-configure({enforceActions: 'always'});
+export default class SettingsStore {
+    rootStore: RootStore;
 
-class SettingsStore {
+    constructor(rootStore: RootStore) {
+        this.rootStore = rootStore;
+    }
+
     @observable settingsRegistry = new Map();
     @observable settingsList: ISettings[] = [];
     @observable newSettings: ISettings | null = null;
@@ -20,7 +24,7 @@ class SettingsStore {
         this.settingsRegistry.clear();
         try {
             const settingsList = await agent.Settings.list();
-            runInAction('loading selectsettings list',() => {
+            runInAction('loading selectsettings list', () => {
                 settingsList.forEach(settings => {
                     console.log(settings);
                     this.settingsRegistry.set(settings.id, settings)
@@ -30,7 +34,7 @@ class SettingsStore {
                 this.loadingSettingsList = false;
             });
         } catch (e) {
-            runInAction('error loading setting list',() => {
+            runInAction('error loading setting list', () => {
                 console.log(e);
                 this.loadingSettingsList = false;
             })
@@ -69,7 +73,7 @@ class SettingsStore {
             console.log('in Add New');
             try {
                 const created = await agent.Settings.create(newSettings);
-                runInAction('creating setting',() => {
+                runInAction('creating setting', () => {
                     console.log('In created: ', created);
                     this.toggleShowForm();
                     this.loadSettingsList();
@@ -77,7 +81,7 @@ class SettingsStore {
                 });
             } catch (e) {
                 console.log(e);
-                runInAction('error creating setting',() => {
+                runInAction('error creating setting', () => {
                     console.log(newSettings);
                     this.toggleShowForm();
                     this.loadSettingsList();
@@ -87,15 +91,15 @@ class SettingsStore {
         } else {
             console.log('in Edit');
             try {
-                const updated = await agent.Settings.update(newSettings);
-                runInAction('updating setting',() => {
+                await agent.Settings.update(newSettings);
+                runInAction('updating setting', () => {
                     this.toggleShowForm();
                     this.loadSettingsList();
                     this.loadingSettingsForm = false;
                 });
             } catch (e) {
                 console.log(e);
-                runInAction('error updating setting',() => {
+                runInAction('error updating setting', () => {
                     this.toggleShowForm();
                     this.loadSettingsList();
                     this.loadingSettingsForm = false;
@@ -108,15 +112,15 @@ class SettingsStore {
     async deleteSettings() {
         this.loadingSettingsForm = true;
         try {
-            const created = await agent.Settings.delete(this.selectedSettings!.id!);
-            runInAction('deleting selectsettings',() => {
+            await agent.Settings.delete(this.selectedSettings!.id!);
+            runInAction('deleting selectsettings', () => {
                 this.toggleShowForm();
                 this.loadSettingsList();
                 this.loadingSettingsForm = false;
             });
         } catch (e) {
             console.log(e);
-            runInAction('error deleting setting',() => {
+            runInAction('error deleting setting', () => {
                 this.toggleShowForm();
                 this.loadSettingsList();
                 this.loadingSettingsForm = false;
@@ -124,7 +128,4 @@ class SettingsStore {
         }
 
     }
-
 }
-
-export default createContext(new SettingsStore())

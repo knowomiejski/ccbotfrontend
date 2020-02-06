@@ -1,21 +1,17 @@
 import React, {useContext, useEffect} from 'react';
 import './SelectBotPageStyle.css'
 import {Link} from "react-router-dom";
-import BotStore from "../../app/stores/bot/botStore";
 import {observer} from "mobx-react-lite";
 import Loader from "../../app/layout/Loader";
 import Header from "../shared/Header";
+import {RootStoreContext} from "../../app/stores/rootStore";
 
 const SelectBotPage = () => {
-    const botStore = useContext(BotStore);
-
+    const rootStore = useContext(RootStoreContext);
+    const {botStore} = rootStore;
     useEffect(() => {
-        getBotList();
-    }, []);
-
-    const getBotList = () => {
-        botStore.loadBotList();
-    };
+        botStore.loadBotList();;
+    }, [botStore]);
 
     return (
         <div>

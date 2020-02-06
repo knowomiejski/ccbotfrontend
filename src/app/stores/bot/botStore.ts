@@ -1,11 +1,17 @@
 import {action, configure, observable, runInAction} from "mobx";
 import {IBot} from "../../models/Bot";
 import agent from "../../api/agent";
-import {createContext} from "react";
+import {RootStore} from "../rootStore";
 
 configure({enforceActions: 'always'});
 
-class BotStore {
+export default class BotStore {
+    rootStore: RootStore;
+
+    constructor(rootStore: RootStore) {
+        this.rootStore = rootStore;
+    }
+
     @observable botRegistry = new Map();
     @observable botList: IBot[] = [];
     @observable selectedBot: IBot | null = null;
@@ -16,7 +22,7 @@ class BotStore {
         this.botRegistry.clear();
         try {
             const botList = await agent.Bot.list();
-            runInAction('loading bot list',() => {
+            runInAction('loading bot list', () => {
                 botList.forEach(settings => {
                     console.log(settings);
                     this.botRegistry.set(settings.id, settings)
@@ -26,7 +32,7 @@ class BotStore {
                 this.loadingBotList = false;
             });
         } catch (e) {
-            runInAction('error loading bot list',() => {
+            runInAction('error loading bot list', () => {
                 console.log(e);
                 this.loadingBotList = false;
             })
@@ -39,5 +45,3 @@ class BotStore {
     };
 
 }
-
-export default createContext(new BotStore())

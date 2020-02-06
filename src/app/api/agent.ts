@@ -1,8 +1,35 @@
 import axios, {AxiosResponse} from 'axios'
 import {ISettings} from "../models/Settings";
 import {IBot} from "../models/Bot";
+import {history} from '../..';
+import {toast} from "react-toastify";
+import {IUser, IUserLoginFormValues} from "../models/User";
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
+
+axios.interceptors.response.use(undefined, error => {
+    if (error.message === 'Network Error' && !error.response) {
+        toast.error('API isn\'t running')
+    }
+    const {status, data, config} = error.response;
+
+    if (status === 404) {
+        history.push('/notfound')
+    }
+    // not found for bad guid's
+    if (status === 400 && config.method === 'get' && data.errots.hasOwnProperty('id')) {
+        history.push('/notfound')
+    }
+
+    if (status === 401) {
+        toast.error('You need to be logged in');
+        history.push('/')
+    }
+
+    if (status === 500) {
+        toast.error('Server error :(')
+    }
+});
 
 const responseBody = (response: AxiosResponse) => response.data;
 
@@ -38,7 +65,14 @@ const Bot = {
     delete: (id: string) => requests.del(`/bot/${id}`)
 };
 
+const User = {
+    current: (): Promise<IUser> => requests.get('/user'),
+    login: (user: IUserLoginFormValues): Promise<IUser> => requests.post(`/user/login`, user),
+
+};
+
 export default {
     Settings,
-    Bot
+    Bot,
+    User
 }

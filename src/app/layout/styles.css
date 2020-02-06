@@ -16,6 +16,10 @@ input {
     font-family: 'Heebo', sans-serif;
 }
 
+button {
+    outline: none;
+}
+
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -40,6 +44,16 @@ code {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+
+.cc-logo {
+    min-height: 265px;
+    min-width: 155px;
+    background-image: url('../../app/layout/assets/Logo-ConservationCast-Master.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .cc-card-title {
@@ -96,9 +110,13 @@ code {
     justify-content: center;
     align-items: center;
     border: 1px solid #cccccc;
+    background-color: #ffffff;
+    color: #404040;
     user-select: none;
     cursor: pointer;
     min-width: 120px;
+    padding-left: 15px;
+    padding-right: 15px;
     font-size: 20px;
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 22px;
@@ -106,7 +124,7 @@ code {
 }
 
 .cc-btn:active {
-    box-shadow: 0px 3px 6px #FFF;
+    box-shadow: 0px 3px 6px #40404000;
     transition: all .2s ease-in-out;
 }
 

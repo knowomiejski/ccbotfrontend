@@ -2,13 +2,13 @@ import React, {ChangeEvent, useContext, useState} from 'react';
 import '../SelectSettingsPageStyle.css'
 import './SelectSettingsFormStyle.css'
 import {ISettings} from '../../../app/models/Settings';
-import SettingsStore from "../../../app/stores/settings/settingsStore";
 import Loader from "../../../app/layout/Loader";
 import {observer} from 'mobx-react-lite';
+import {RootStoreContext} from "../../../app/stores/rootStore";
 
 const SelectSettingsForm = () => {
-
-    const settingsStore = useContext(SettingsStore);
+    const rootStore = useContext(RootStoreContext);
+    const {settingsStore} = rootStore;
 
     const initializeForm = () => {
         if (settingsStore.selectedSettings) {
@@ -44,7 +44,7 @@ const SelectSettingsForm = () => {
             <div className="cc-container">
                 <div className="select-settings-form-container">
                     <div className="cc-card select-settings-form-card">
-                        <div className="cc-card-content">
+                        <form className="cc-card-content">
                             <div>
                                 <div className="cc-card-title">
                                     {settingsStore.formType} Settings
@@ -98,7 +98,7 @@ const SelectSettingsForm = () => {
                                         </div>
                                 }
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

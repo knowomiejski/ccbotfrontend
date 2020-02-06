@@ -3,21 +3,18 @@ import {FiEdit} from "react-icons/fi";
 import "./SelectSettingsPageStyle.css"
 import SettingsForm from "./form/SelectSettingsForm";
 import Loader from "../../app/layout/Loader";
-import SettingsStore from "../../app/stores/settings/settingsStore";
 import {observer} from "mobx-react-lite";
 import {Link} from "react-router-dom";
 import Header from "../shared/Header";
+import {RootStoreContext} from "../../app/stores/rootStore";
 
 const SelectSettingsPage = () => {
-    const settingsStore = useContext(SettingsStore);
+    const rootStore = useContext(RootStoreContext);
+    const {settingsStore} = rootStore;
 
     useEffect(() => {
-        getSettingsList();
-    }, []);
-
-    const getSettingsList = () => {
         settingsStore.loadSettingsList();
-    };
+    }, [settingsStore]);
 
     return (
         <div>
