@@ -9,13 +9,13 @@ const TextInput: React.FC<IProps> = ({
                                          meta: {touched, error}
                                      }) => {
     return (
-        <div>
+        <div style={{display: 'flex', flexDirection: 'column'}}>
             <input
                 className="cc-input"
                 {...input}
             />
             {touched && error && (
-                <span>{error}</span>
+                <div style={{marginTop: '5px', paddingLeft: '15px'}} className='cc-danger-text'>{error}</div>
             )}
             {console.log(touched, error)}
         </div>
