@@ -2,15 +2,15 @@ import React, {useContext, useEffect} from 'react';
 import './SelectBotPageStyle.css'
 import {Link} from "react-router-dom";
 import {observer} from "mobx-react-lite";
-import Loader from "../../app/layout/Loader";
-import Header from "../shared/Header";
+import Loader from "../../app/layout/shared/Loader";
+import Header from "../../app/layout/shared/Header";
 import {RootStoreContext} from "../../app/stores/rootStore";
 
 const SelectBotPage = () => {
     const rootStore = useContext(RootStoreContext);
     const {botStore} = rootStore;
     useEffect(() => {
-        botStore.loadBotList();;
+        botStore.loadBotList();
     }, [botStore]);
 
     return (
@@ -56,11 +56,6 @@ const SelectBotPage = () => {
                                         </div>
                                         <div className="select-bot-page-btn-container">
                                             <div className="select-bot-page-control-btn-container">
-                                                <Link className="cc-btn" to='/'>
-                                                    <div className="cc-btn-content">
-                                                        Back
-                                                    </div>
-                                                </Link>
                                                 <Link className="cc-btn cc-primary-btn" to='/settings'>
                                                     <div className="cc-btn-content">
                                                         Next

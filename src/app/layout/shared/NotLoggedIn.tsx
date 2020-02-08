@@ -1,9 +1,9 @@
 import React from 'react';
 import '../styles.css'
 import {Link} from "react-router-dom";
-import Header from ".//Header";
+import Header from "./Header";
 
-const NotFound = () => {
+const NotLoggedIn = () => {
     return (
         <div>
             <Header/>
@@ -23,11 +23,11 @@ const NotFound = () => {
                     >
                         <div style={{width: '250px'}} className='cc-logo'></div>
                         <div className='cc-card-title'>
-                            Page not found :(
+                            Please Log In :)
                         </div>
                         <Link to='/' className='cc-btn'>
                             <div className='cc-btn-content'>
-                                Back to dashboard
+                                Login
                             </div>
                         </Link>
                     </div>
@@ -37,4 +37,4 @@ const NotFound = () => {
     );
 };
 
-export default NotFound;
+export default NotLoggedIn;

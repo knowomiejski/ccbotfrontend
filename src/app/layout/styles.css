@@ -66,6 +66,17 @@ code {
     color: #404040;
 }
 
+.cc-card-subtitle {
+    text-align: center;
+    margin-top: -30px;
+    margin-bottom: 50px;
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: 300;
+    letter-spacing: 0;
+    color: #404040;
+}
+
 .cc-label {
     padding-left: 15px;
     text-align: left;
@@ -140,6 +151,10 @@ code {
     padding: 5px;
 }
 
+.cc-warning-text {
+    color: #f5ae41;
+}
+
 .cc-warning-btn {
     border: 1px solid #f5ae41;
     color: #f5ae41;
@@ -155,6 +170,10 @@ code {
     color: #f9ab1e;
 }
 
+.cc-sucess-text {
+    color: #30B55C;
+}
+
 .cc-sucess-btn {
     border: 1px solid #30B55C;
     color: #30B55C;
@@ -168,6 +187,10 @@ code {
 .cc-sucess-btn:active {
     border: 1px solid #30a653;
     color: #30a653;
+}
+
+.cc-danger-text {
+    color: #b52918;
 }
 
 .cc-danger-btn {

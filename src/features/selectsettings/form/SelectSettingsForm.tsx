@@ -2,7 +2,7 @@ import React, {ChangeEvent, useContext, useState} from 'react';
 import '../SelectSettingsPageStyle.css'
 import './SelectSettingsFormStyle.css'
 import {ISettings} from '../../../app/models/Settings';
-import Loader from "../../../app/layout/Loader";
+import Loader from "../../../app/layout/shared/Loader";
 import {observer} from 'mobx-react-lite';
 import {RootStoreContext} from "../../../app/stores/rootStore";
 

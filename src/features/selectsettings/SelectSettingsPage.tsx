@@ -2,10 +2,10 @@ import React, {useContext, useEffect} from "react";
 import {FiEdit} from "react-icons/fi";
 import "./SelectSettingsPageStyle.css"
 import SettingsForm from "./form/SelectSettingsForm";
-import Loader from "../../app/layout/Loader";
+import Loader from "../../app/layout/shared/Loader";
 import {observer} from "mobx-react-lite";
 import {Link} from "react-router-dom";
-import Header from "../shared/Header";
+import Header from "../../app/layout/shared/Header";
 import {RootStoreContext} from "../../app/stores/rootStore";
 
 const SelectSettingsPage = () => {
@@ -79,14 +79,14 @@ const SelectSettingsPage = () => {
                                                     <div className="cc-btn-content">Add New Settings</div>
                                                 </div>
                                                 <div className="select-settings-page-control-btn-container">
-                                                    <Link className="cc-btn" to='/bot'>
+                                                    <Link className="cc-btn" to='/selectbot'>
                                                         <div className="cc-btn-content">
                                                             Back
                                                         </div>
                                                     </Link>
-                                                    <div className="cc-btn cc-primary-btn">
-                                                        <div className="cc-btn-content">Next</div>
-                                                    </div>
+                                                    <Link className="cc-btn cc-primary-btn" to='/qbot'>
+                                                        <div className="cc-btn-content">Start</div>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>

@@ -7,6 +7,14 @@ import {IUser, IUserLoginFormValues} from "../models/User";
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
+axios.interceptors.request.use((config) => {
+    const token = window.localStorage.getItem('jwt');
+    if (token) config.headers.Authorization = 'Bearer ' + token;
+    return config
+}, error => {
+    return Promise.reject(error);
+});
+
 axios.interceptors.response.use(undefined, error => {
     if (error.message === 'Network Error' && !error.response) {
         toast.error('API isn\'t running')
@@ -17,12 +25,19 @@ axios.interceptors.response.use(undefined, error => {
         history.push('/notfound')
     }
     // not found for bad guid's
-    if (status === 400 && config.method === 'get' && data.errots.hasOwnProperty('id')) {
+    if (status === 400 && config.method === 'get' && data.errors.hasOwnProperty('id')) {
         history.push('/notfound')
     }
 
-    if (status === 401) {
-        toast.error('You need to be logged in');
+    if (status === 401 && (data.errors !== undefined)) {
+        console.warn(error.response);
+        toast.error(data.errors.login);
+        history.push('/')
+    }
+
+    if (status === 401 && (data.errors === undefined)) {
+        console.warn(error.response);
+        toast.error('Please login');
         history.push('/')
     }
 
