@@ -17,7 +17,8 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use(undefined, error => {
     if (error.message === 'Network Error' && !error.response) {
-        toast.error('API isn\'t running')
+        history.push('/');
+        toast.error('API isn\'t running');
     }
     const {status, data, config} = error.response;
 
@@ -30,15 +31,15 @@ axios.interceptors.response.use(undefined, error => {
     }
 
     if (status === 401 && (data.errors !== undefined)) {
+        history.push('/');
         console.warn(error.response);
         toast.error(data.errors.login);
-        history.push('/')
     }
 
     if (status === 401 && (data.errors === undefined)) {
+        history.push('/');
         console.warn(error.response);
-        toast.error('Please login');
-        history.push('/')
+        toast.error('Please login first :)');
     }
 
     if (status === 500) {
@@ -74,6 +75,7 @@ const Settings = {
 
 const Bot = {
     list: (): Promise<IBot[]> => requests.get('/bot'),
+    listType: (type: string): Promise<IBot[]> => requests.get(`/bot/type/${type}`),
     details: (id: string) => requests.get(`/bot/${id}`),
     create: (bot: IBot) => requests.post('/bot', bot),
     update: (bot: IBot) => requests.put(`/bot/${bot.id}`, bot),

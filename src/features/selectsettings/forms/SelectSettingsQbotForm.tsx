@@ -6,7 +6,7 @@ import Loader from "../../../app/layout/shared/Loader";
 import {observer} from 'mobx-react-lite';
 import {RootStoreContext} from "../../../app/stores/rootStore";
 
-const SelectSettingsForm = () => {
+const SelectSettingsQbotForm = () => {
     const rootStore = useContext(RootStoreContext);
     const {settingsStore} = rootStore;
 
@@ -106,4 +106,4 @@ const SelectSettingsForm = () => {
     );
 };
 
-export default observer(SelectSettingsForm);
+export default observer(SelectSettingsQbotForm);

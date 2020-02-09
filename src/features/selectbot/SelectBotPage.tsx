@@ -5,13 +5,20 @@ import {observer} from "mobx-react-lite";
 import Loader from "../../app/layout/shared/Loader";
 import Header from "../../app/layout/shared/Header";
 import {RootStoreContext} from "../../app/stores/rootStore";
+import {toast} from "react-toastify";
+import {history} from "../../index";
 
 const SelectBotPage = () => {
     const rootStore = useContext(RootStoreContext);
     const {botStore} = rootStore;
     useEffect(() => {
-        botStore.loadBotList();
-    }, [botStore]);
+        if (rootStore.sharedStore.selectedProgram) {
+            botStore.loadBotTypeList(rootStore.sharedStore.selectedProgram);
+        } else {
+            history.push('/');
+            toast.error('Please select a program first :)');
+        }
+    }, [botStore, rootStore.sharedStore.selectedProgram]);
 
     return (
         <div>
@@ -56,6 +63,11 @@ const SelectBotPage = () => {
                                         </div>
                                         <div className="select-bot-page-btn-container">
                                             <div className="select-bot-page-control-btn-container">
+                                                <Link className="cc-btn" to='/'>
+                                                    <div className="cc-btn-content">
+                                                        Back
+                                                    </div>
+                                                </Link>
                                                 <Link className="cc-btn cc-primary-btn" to='/settings'>
                                                     <div className="cc-btn-content">
                                                         Next

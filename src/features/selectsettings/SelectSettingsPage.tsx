@@ -1,20 +1,32 @@
 import React, {useContext, useEffect} from "react";
 import {FiEdit} from "react-icons/fi";
 import "./SelectSettingsPageStyle.css"
-import SettingsForm from "./form/SelectSettingsForm";
 import Loader from "../../app/layout/shared/Loader";
 import {observer} from "mobx-react-lite";
 import {Link} from "react-router-dom";
 import Header from "../../app/layout/shared/Header";
 import {RootStoreContext} from "../../app/stores/rootStore";
+import SelectSettingsQbotForm from "./forms/SelectSettingsQbotForm";
+import {history} from "../../index";
+import {toast} from "react-toastify";
 
 const SelectSettingsPage = () => {
     const rootStore = useContext(RootStoreContext);
-    const {settingsStore} = rootStore;
+    const {settingsStore, botStore, sharedStore} = rootStore;
 
     useEffect(() => {
-        settingsStore.loadSettingsList();
-    }, [settingsStore]);
+        if (sharedStore.selectedProgram) {
+            settingsStore.loadSettingsList();
+        }  else {
+            history.push('/');
+            toast.error('Please select a program first :)');
+        }
+    }, [settingsStore, sharedStore.selectedProgram]);
+
+    const openForm = (formType: string) => {
+        settingsStore.setFormType(formType);
+        settingsStore.toggleShowForm();
+    };
 
     return (
         <div>
@@ -23,7 +35,8 @@ const SelectSettingsPage = () => {
                 <div>
                     {
                         settingsStore.showForm ?
-                            <SettingsForm/>
+                            botStore.selectedBot?.type === 'qbot' ?
+                            <SelectSettingsQbotForm/> : null
                             : null
                     }
                 </div>
@@ -57,8 +70,7 @@ const SelectSettingsPage = () => {
                                                             <div className="select-settings-page-list-item-edit">
                                                                 <div
                                                                     onClick={() => {
-                                                                        settingsStore.setFormType("Edit");
-                                                                        settingsStore.toggleShowForm();
+                                                                        openForm('Edit');
                                                                     }}
                                                                     className={"cc-btn cc-fab-btn cc-warning-btn " +
                                                                     (settingsStore.selectedSettings?.id === settings.id ? "" : "select-settings-page-fab-unselected")}>
@@ -73,8 +85,7 @@ const SelectSettingsPage = () => {
                                             </div>
                                             <div className="select-settings-page-btn-container">
                                                 <div onClick={() => {
-                                                    settingsStore.setFormType("Add New");
-                                                    settingsStore.toggleShowForm();
+                                                    openForm('Add New');
                                                 }} className="cc-btn cc-sucess-btn">
                                                     <div className="cc-btn-content">Add New Settings</div>
                                                 </div>
@@ -84,7 +95,7 @@ const SelectSettingsPage = () => {
                                                             Back
                                                         </div>
                                                     </Link>
-                                                    <Link className="cc-btn cc-primary-btn" to='/qbot'>
+                                                    <Link onClick={() => rootStore.sharedStore.addRunningBot(rootStore.botStore.selectedBot!)} className="cc-btn cc-primary-btn" to='/'>
                                                         <div className="cc-btn-content">Start</div>
                                                     </Link>
                                                 </div>

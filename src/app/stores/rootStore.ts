@@ -1,5 +1,5 @@
 import SettingsStore from "./settings/settingsStore";
-import BotStore from "./bot/botStore";
+import BotStore from "./selectbot/botStore";
 import UserStore from "./user/userStore";
 import {createContext} from "react";
 import {configure} from "mobx";
